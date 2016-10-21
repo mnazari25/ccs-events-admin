@@ -11,19 +11,44 @@ import UIKit
 class EventDetailViewController: UIViewController {
 
     @IBOutlet weak var actionButton: UIButton!
-    @IBOutlet weak var submitURLButton: UIButton!
+    @IBOutlet weak var secondaryActionButton: UIButton!
+    
+    var selectedEvent : Event?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton.layer.cornerRadius = 6.0
-//        submitURLButton.layer.cornerRadius = 6.0
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        secondaryActionButton.layer.cornerRadius = 6.0
+        
+        if selectedEvent == nil {
+            secondaryActionButton.setTitle("Guardar Evento", for: .normal)
+            //TODO: Set button color
+        }
     }
     
     @IBAction func actionButtonPressed(_ sender: UIButton) {
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func secondaryActionPressed(_ sender: UIButton) {
+        
+        var shouldEdit = false
+        
+        if selectedEvent != nil {
+            if secondaryActionButton.titleLabel?.text == "Editar" {
+                shouldEdit = true
+                secondaryActionButton.setTitle("Hecho", for: .normal)
+                //TODO: Set button color
+            } else {
+                secondaryActionButton.setTitle("Editar", for: .normal)
+                //TODO: Set button color
+            }
+        }
+        NotificationCenter.default.post(name: NotificationCenter.SECONDARY_ACTION_NOTIFICATION, object: shouldEdit)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let formVC = segue.destination as? FormViewController,
+            selectedEvent != nil else { return }
+        formVC.selectedEvent = selectedEvent
     }
 }

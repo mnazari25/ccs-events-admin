@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		9A70E6C4BE58519FB97B66C9 /* Pods_ccsevents_admin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B4669EA389E3C27025C8F7 /* Pods_ccsevents_admin.framework */; };
 		AF0893191DB9CA26005A5CBF /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0893181DB9CA26005A5CBF /* FormViewController.swift */; };
-		AF62C0C51DAAD6CE00016438 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF62C0C41DAAD6CE00016438 /* AddEventViewController.swift */; };
+		AF08931B1DB9F380005A5CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08931A1DB9F380005A5CBF /* Constants.swift */; };
+		AF08931D1DBA0737005A5CBF /* Helpers-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08931C1DBA0737005A5CBF /* Helpers-Extensions.swift */; };
 		AF975B541DA9EDB0007B4A88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF975B531DA9EDB0007B4A88 /* AppDelegate.swift */; };
 		AF975B561DA9EDB0007B4A88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF975B551DA9EDB0007B4A88 /* ViewController.swift */; };
 		AF975B591DA9EDB0007B4A88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF975B571DA9EDB0007B4A88 /* Main.storyboard */; };
@@ -31,7 +32,8 @@
 /* Begin PBXFileReference section */
 		96B4669EA389E3C27025C8F7 /* Pods_ccsevents_admin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ccsevents_admin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF0893181DB9CA26005A5CBF /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
-		AF62C0C41DAAD6CE00016438 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		AF08931A1DB9F380005A5CBF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AF08931C1DBA0737005A5CBF /* Helpers-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Helpers-Extensions.swift"; sourceTree = "<group>"; };
 		AF975B501DA9EDB0007B4A88 /* ccsevents-admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ccsevents-admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF975B531DA9EDB0007B4A88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF975B551DA9EDB0007B4A88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,8 @@
 				AFE8B1E51DAA1B530056D44E /* GoogleService-Info.plist */,
 				AFE8B1DA1DAA00840056D44E /* Event.swift */,
 				AF975B531DA9EDB0007B4A88 /* AppDelegate.swift */,
+				AF08931A1DB9F380005A5CBF /* Constants.swift */,
+				AF08931C1DBA0737005A5CBF /* Helpers-Extensions.swift */,
 				AFE8B1D81DAA002E0056D44E /* Main Menu */,
 				AFE8B1D91DAA00360056D44E /* Event Management */,
 				AFE8B1E91DAA2C320056D44E /* Notification */,
@@ -134,7 +138,6 @@
 			children = (
 				AFE8B1D61DA9FDDC0056D44E /* EventManageViewController.swift */,
 				AFE8B1E31DAA19640056D44E /* EventDetailViewController.swift */,
-				AF62C0C41DAAD6CE00016438 /* AddEventViewController.swift */,
 				AF0893181DB9CA26005A5CBF /* FormViewController.swift */,
 				AFE8B1E21DAA011D0056D44E /* Custom Event Cell */,
 			);
@@ -294,9 +297,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFE8B1EE1DAA2F7E0056D44E /* GalleryViewController.swift in Sources */,
-				AF62C0C51DAAD6CE00016438 /* AddEventViewController.swift in Sources */,
 				AF975B561DA9EDB0007B4A88 /* ViewController.swift in Sources */,
 				AFE8B1EB1DAA2E2A0056D44E /* GalleryCollectionViewCell.swift in Sources */,
+				AF08931D1DBA0737005A5CBF /* Helpers-Extensions.swift in Sources */,
 				AF975B541DA9EDB0007B4A88 /* AppDelegate.swift in Sources */,
 				AFE8B1D51DA9FBC00056D44E /* MenuTableViewCell.swift in Sources */,
 				AF975B5C1DA9EDB0007B4A88 /* ccsevents_admin.xcdatamodeld in Sources */,
@@ -304,6 +307,7 @@
 				AFE8B1E81DAA2C2F0056D44E /* NotificationViewController.swift in Sources */,
 				AFE8B1DB1DAA00840056D44E /* Event.swift in Sources */,
 				AFE8B1E41DAA19640056D44E /* EventDetailViewController.swift in Sources */,
+				AF08931B1DB9F380005A5CBF /* Constants.swift in Sources */,
 				AFE8B1D71DA9FDDC0056D44E /* EventManageViewController.swift in Sources */,
 				AF0893191DB9CA26005A5CBF /* FormViewController.swift in Sources */,
 			);

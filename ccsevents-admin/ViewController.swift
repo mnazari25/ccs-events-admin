@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     var userAction = false
     var isExpanded = false
     
@@ -35,6 +35,8 @@ class ViewController: UIViewController {
         galleryContainer.isHidden = true
         notificationContainer.isHidden = true
         informationContainer.isHidden = true
+        
+        registerNotifications()
     }
     
     override func viewDidLayoutSubviews() {
@@ -121,3 +123,11 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+
+// MARK: - Notifications
+extension ViewController {
+    func registerNotifications() {
+        //TODO: Register any notifications here
+    }
+}
+

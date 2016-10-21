@@ -20,6 +20,7 @@ class EventManageViewController: UIViewController {
     @IBOutlet weak var eventTableView: UITableView!
     @IBOutlet weak var addEventButton: UIButton!
     
+    var selectedEvent : Event?
     var savedEvents : [Event] = []
     
     override func viewDidLoad() {
@@ -39,7 +40,13 @@ class EventManageViewController: UIViewController {
     }
     
     @IBAction func addEventButtonPressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "toAddFormVC", sender: self)
+        self.performSegue(withIdentifier: "toDetailVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailVC = segue.destination as? EventDetailViewController else  { return }
+        detailVC.selectedEvent = selectedEvent
+        selectedEvent = nil
     }
 }
 
@@ -73,6 +80,7 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedEvent = savedEvents[indexPath.row]
         self.performSegue(withIdentifier: "toDetailVC", sender: self)
     }
 }
