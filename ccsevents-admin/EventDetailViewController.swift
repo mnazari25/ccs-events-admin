@@ -16,7 +16,7 @@ class EventDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton.layer.cornerRadius = 6.0
-        submitURLButton.layer.cornerRadius = 6.0
+//        submitURLButton.layer.cornerRadius = 6.0
     }
 
     override func viewWillAppear(_ animated: Bool) {

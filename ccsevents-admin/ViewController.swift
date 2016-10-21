@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var userAction = false
+    var isExpanded = false
+    
     let menuCellReuse = "menuCellReuse"
     let menuItems = ["Evento", "Galería", "Notificación", "Información"]
     let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
@@ -34,16 +37,33 @@ class ViewController: UIViewController {
         informationContainer.isHidden = true
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if userAction {
+            userAction = false
+            return
+        }
+        
+        animateMenuBar(open: isExpanded, speed: 0.1)
+    }
+    
     @IBAction func menuButtonPressed(_ sender: UIBarButtonItem) {
-        if menuLeadingConstraint.constant >= 0 {
+        userAction = true
+        isExpanded = !isExpanded
+        animateMenuBar(open: isExpanded)
+    }
+    
+    func animateMenuBar(open : Bool, speed: Double = 0.5) {
+        if !open {
             self.menuLeadingConstraint.constant = -self.menuTableView.frame.width
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: speed, animations: {
                 self.view.layoutIfNeeded()
             })
             
         } else {
             self.menuLeadingConstraint.constant = 0
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: speed, animations: {
                 self.view.layoutIfNeeded()
             })
         }
