@@ -9,7 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ImagePicker-ImagePicker.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ImagePicker.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ccsevents-admin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>16F3DA3E206815E82399AB1F56CF93BF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>71A6D46FF0D90DE90DA81CFD2DB26F33</key>
+		<key>55BD3033702F62283C42C1F6E037342D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7C4108C3722F95AE55CEDD665AC9630D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>940C36B0B31C227C97CCC7F9EB9A37AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -13,3 +13,13 @@ extension NotificationCenter {
         return NSNotification.Name(rawValue: "SECONDARY_ACTION_NOTIFICATION")
     }
 }
+
+class Constants {
+    static let adminNotesKey = "adminNotes"
+    static let eventNameKey = "eventName"
+    static let eventDateKey = "eventDate"
+    static let eventLocationKey = "eventLocation"
+    static let eventDescriptionKey = "eventDescription"
+    static let eventTimeKey = "eventTime"
+    static let eventImageKey = "eventImage"
+}

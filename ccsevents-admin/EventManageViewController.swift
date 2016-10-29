@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import SDWebImage
 
 class EventManageViewController: UIViewController {
 
@@ -30,6 +31,8 @@ class EventManageViewController: UIViewController {
         
         eventTableView.register(UINib.init(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: eventCellReuseID)
         eventTableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        eventTableView.allowsMultipleSelectionDuringEditing = false
         
         readAndListenForEvents()
     }
@@ -63,10 +66,7 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         
         let thisEvent = savedEvents[indexPath.row]
         
-        if indexPath.row == 1 {
-            cell.eventImage.image = #imageLiteral(resourceName: "gallery")
-        }
-        
+        cell.eventImage.sd_setImage(with: URL(string: thisEvent.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         cell.eventTitle.text = thisEvent.eventName
         cell.eventDesc.text = thisEvent.eventDescription
         cell.eventDate.text = thisEvent.eventDate
@@ -83,15 +83,33 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         selectedEvent = savedEvents[indexPath.row]
         self.performSegue(withIdentifier: "toDetailVC", sender: self)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            let theEventToDestroy = savedEvents[indexPath.row]
+            ref.child(theEventToDestroy.key).removeValue()
+        }
+    }
 }
 
 // MARK: - CRUD Functionality
 extension EventManageViewController {
     func readAndListenForEvents() {
         ref.queryOrderedByKey().observe(.value) { (snap : FIRDataSnapshot) in
+            
+            // Clear old list to make room for new events
+            self.savedEvents = []
+            
             if snap.hasChildren() {
-                // Clear old list to make room for new events
-                self.savedEvents = []
                 // Loop through all event children
                 for child in snap.children {
                     // Create new event object using Data snapshot
@@ -99,9 +117,10 @@ extension EventManageViewController {
                     // Add new event to saved event list
                     self.savedEvents.append(newEvent)
                 }
-                // Reload table
-                self.eventTableView.reloadData()
+                self.savedEvents = self.savedEvents.reversed()
             }
+            // Reload table
+            self.eventTableView.reloadData()
         }
     }
 }

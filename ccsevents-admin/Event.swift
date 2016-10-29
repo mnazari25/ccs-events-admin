@@ -17,11 +17,12 @@ class Event : NSObject {
     var eventLocation : String = ""
     var eventTime : String = ""
     var eventDescription : String = ""
-    var eventImage : UIImage = UIImage()
+    var eventImage : String = ""
+    var adminNotes : String = ""
     
     init(eventName : String, eventDate : String,
          eventLocation : String, eventTime : String,
-         eventDescription : String, eventImage : UIImage) {
+         eventDescription : String, eventImage : String, adminNotes : String = "") {
 
         self.eventName = eventName
         self.eventDate = eventDate
@@ -29,7 +30,7 @@ class Event : NSObject {
         self.eventDescription = eventDescription
         self.eventTime = eventTime
         self.eventImage = eventImage
-        
+        self.adminNotes = adminNotes
     }
     
     init(snapshot : FIRDataSnapshot) {
@@ -37,10 +38,14 @@ class Event : NSObject {
         let snapshotValue = snapshot.value as! [String: Any]
         
         //TODO: Make this safer by adding nil checks on returned snapshot items
-        eventName = snapshotValue["eventName"] as! String
-        eventDate = snapshotValue["eventDate"] as! String
-        eventLocation = snapshotValue["eventLocation"] as! String
-        eventDescription = snapshotValue["eventDescription"] as! String
+        eventName = snapshotValue[Constants.eventNameKey] as! String
+        eventDate = snapshotValue[Constants.eventDateKey] as! String
+        eventLocation = snapshotValue[Constants.eventLocationKey] as! String
+        eventDescription = snapshotValue[Constants.eventDescriptionKey] as! String
+        eventTime = snapshotValue[Constants.eventTimeKey] as! String
+        eventImage = snapshotValue[Constants.eventImageKey] as! String
+        adminNotes = snapshotValue[Constants.adminNotesKey] as! String
+        
     }
     
 }

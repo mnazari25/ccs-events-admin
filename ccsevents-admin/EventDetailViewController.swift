@@ -23,6 +23,7 @@ class EventDetailViewController: UIViewController {
         if selectedEvent == nil {
             secondaryActionButton.setTitle("Guardar Evento", for: .normal)
             //TODO: Set button color
+        
         }
     }
     

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
+import SDWebImage
 
 class FormViewController: UIViewController {
 
+    var ref : FIRDatabaseReference!
+    
     @IBOutlet weak var daScrollView: UIScrollView!
     
     @IBOutlet weak var urlField: UITextField!
@@ -26,6 +31,9 @@ class FormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ref = FIRDatabase.database().reference().child("ccs/events")
+        
         daScrollView.contentSize.height = 950
         
         descriptionTextView.text = "Descripción del evento"
@@ -41,18 +49,21 @@ class FormViewController: UIViewController {
         
         guard let event = selectedEvent else {
             // Enable textfields if no event was passed so the user can add an event.
-            //TODO: remove edit button
             toggleTextfields(enabled: true)
             return
         }
         
-        urlField.text = event.eventImage.accessibilityIdentifier
+        urlField.text = event.eventImage
+        eventImageView.sd_setImage(with: URL(string: event.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         eventNameField.text = event.eventName
         locationField.text = event.eventLocation
         startTimeField.text = event.eventDate
         endTimeField.text = event.eventDate
+        
         descriptionTextView.text = event.eventDescription
+        descriptionTextView.textColor = .black
         adminNotesTextView.text = event.eventDescription
+        adminNotesTextView.textColor = .black
         
         toggleTextfields(enabled: false)
     }
@@ -73,6 +84,31 @@ class FormViewController: UIViewController {
         // If the selectedEvent is nil, we should add the event and save it to Firebase. Assuming all necessary fields have been filled in.
         if shouldSaveChanges {
             print("YEAHHH")
+            if urlField.hasText
+                && eventNameField.hasText
+                && locationField.hasText
+                && startTimeField.hasText // Should change to event date
+                && endTimeField.hasText // Should change to event time
+                && descriptionTextView.hasText {
+                
+                // TODO: Save event to Firebase
+                let eventToSave = [Constants.eventNameKey : eventNameField.text!,
+                                    Constants.eventLocationKey : locationField.text!,
+                                    Constants.eventDescriptionKey : descriptionTextView.text!,
+                                    Constants.adminNotesKey : adminNotesTextView.text!,
+                                    Constants.eventDateKey : startTimeField.text!,
+                                    Constants.eventTimeKey : endTimeField.text!,
+                                    Constants.eventImageKey : urlField.text!]
+                
+                if selectedEvent == nil {
+                    ref.childByAutoId().setValue(eventToSave)
+                } else {
+                    ref.child((selectedEvent?.key)!).setValue(eventToSave)
+                }
+                
+            } else {
+                // TODO: Notify user that all fields must be filled in.
+            }
         }
     }
 }
@@ -105,8 +141,7 @@ extension FormViewController : UITextFieldDelegate {
             if urlText.isEmpty {
                 eventImageView.image = #imageLiteral(resourceName: "calendar")
             } else {
-                eventImageView.downloadedFrom(link: urlText)
-                
+                eventImageView.sd_setImage(with: URL(string: urlText), placeholderImage: #imageLiteral(resourceName: "calendar"))
             }
 
         } else if textField.isEqual(eventNameField) {
