@@ -13,15 +13,15 @@ import FirebaseDatabase
 class Event : NSObject {
     var key : String = ""
     var eventName : String = ""
-    var eventDate : String = ""
+    var eventDate : u_long = 0
     var eventLocation : String = ""
-    var eventTime : String = ""
+    var eventTime : u_long = 0
     var eventDescription : String = ""
     var eventImage : String = ""
     var adminNotes : String = ""
     
-    init(eventName : String, eventDate : String,
-         eventLocation : String, eventTime : String,
+    init(eventName : String, eventDate : u_long,
+         eventLocation : String, eventTime : u_long,
          eventDescription : String, eventImage : String, adminNotes : String = "") {
 
         self.eventName = eventName
@@ -39,10 +39,10 @@ class Event : NSObject {
         
         //TODO: Make this safer by adding nil checks on returned snapshot items
         eventName = snapshotValue[Constants.eventNameKey] as! String
-        eventDate = snapshotValue[Constants.eventDateKey] as! String
+        eventDate = snapshotValue[Constants.eventDateKey] as! u_long
         eventLocation = snapshotValue[Constants.eventLocationKey] as! String
         eventDescription = snapshotValue[Constants.eventDescriptionKey] as! String
-        eventTime = snapshotValue[Constants.eventTimeKey] as! String
+        eventTime = snapshotValue[Constants.eventTimeKey] as! u_long
         eventImage = snapshotValue[Constants.eventImageKey] as! String
         adminNotes = snapshotValue[Constants.adminNotesKey] as! String
         

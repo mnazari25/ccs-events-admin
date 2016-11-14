@@ -69,7 +69,7 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         cell.eventImage.sd_setImage(with: URL(string: thisEvent.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         cell.eventTitle.text = thisEvent.eventName
         cell.eventDesc.text = thisEvent.eventDescription
-        cell.eventDate.text = thisEvent.eventDate
+        cell.eventDate.text = "\(thisEvent.eventDate)"
         
         return cell
     }
@@ -119,6 +119,11 @@ extension EventManageViewController {
                 }
                 self.savedEvents = self.savedEvents.reversed()
             }
+            
+            UserDefaults.standard.set(self.savedEvents.count, forKey: "eventCount")
+            let countRef = FIRDatabase.database().reference(withPath: "MyNetwork/event_count")
+            countRef.setValue(self.savedEvents.count)
+            
             // Reload table
             self.eventTableView.reloadData()
         }

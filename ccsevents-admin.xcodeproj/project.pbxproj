@@ -200,7 +200,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Amir Nazari";
 				TargetAttributes = {
 					AF975B4F1DA9EDB0007B4A88 = {
@@ -434,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E771A05F2A57445D65FB1F8E /* Pods-ccsevents-admin.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DDHCX46L99;
 				INFOPLIST_FILE = "ccsevents-admin/Info.plist";
@@ -449,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F4D85EFF0EB7EB602E22ECF7 /* Pods-ccsevents-admin.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = DDHCX46L99;
 				INFOPLIST_FILE = "ccsevents-admin/Info.plist";

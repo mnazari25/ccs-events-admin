@@ -57,8 +57,8 @@ class FormViewController: UIViewController {
         eventImageView.sd_setImage(with: URL(string: event.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         eventNameField.text = event.eventName
         locationField.text = event.eventLocation
-        startTimeField.text = event.eventDate
-        endTimeField.text = event.eventDate
+        startTimeField.text = "\(event.eventDate)"
+        endTimeField.text = "\(event.eventDate)"
         
         descriptionTextView.text = event.eventDescription
         descriptionTextView.textColor = .black
@@ -96,12 +96,22 @@ class FormViewController: UIViewController {
                                     Constants.eventLocationKey : locationField.text!,
                                     Constants.eventDescriptionKey : descriptionTextView.text!,
                                     Constants.adminNotesKey : adminNotesTextView.text!,
-                                    Constants.eventDateKey : startTimeField.text!,
-                                    Constants.eventTimeKey : endTimeField.text!,
-                                    Constants.eventImageKey : urlField.text!]
+                                    Constants.eventDateKey : u_long.init(startTimeField.text!) ?? 0,
+                                    Constants.eventTimeKey : u_long.init(startTimeField.text!) ?? 0 ,
+                                    Constants.eventImageKey : urlField.text!] as [String : Any]
                 
                 if selectedEvent == nil {
                     ref.childByAutoId().setValue(eventToSave)
+                    
+                    let countRef = FIRDatabase.database().reference(withPath: "MyNetwork/event_count")
+                    countRef.observeSingleEvent(of: .value) { (snap : FIRDataSnapshot) in
+                        guard var eventCount = snap.value as? Int else {
+                            return
+                        }
+                        
+//                        countRef.setValue(eventCount += 1)
+                    }
+
                 } else {
                     ref.child((selectedEvent?.key)!).setValue(eventToSave)
                 }

@@ -14,8 +14,11 @@ class ViewController: UIViewController {
     var isExpanded = false
     
     let menuCellReuse = "menuCellReuse"
-    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
-    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
+//    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
+//    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
+
+    let menuItems = ["Evento", "Galería"]
+    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery")]
     
     // Outlets
     @IBOutlet weak var menuTableView: UITableView!
