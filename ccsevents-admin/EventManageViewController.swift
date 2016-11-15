@@ -69,7 +69,16 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         cell.eventImage.sd_setImage(with: URL(string: thisEvent.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         cell.eventTitle.text = thisEvent.eventName
         cell.eventDesc.text = thisEvent.eventDescription
-        cell.eventDate.text = "\(thisEvent.eventDate)"
+        
+        let timeInterval : TimeInterval = TimeInterval(thisEvent.eventDate)
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateStyle = .short
+        dayTimePeriodFormatter.timeStyle = .long
+        dayTimePeriodFormatter.timeZone = NSTimeZone.local
+        dayTimePeriodFormatter.locale = Locale.init(identifier: "es_HN")
+        let dateString = dayTimePeriodFormatter.string(from: date)
+        cell.eventDate.text = "\(dateString)"
         
         return cell
     }

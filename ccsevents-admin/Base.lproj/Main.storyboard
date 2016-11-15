@@ -31,7 +31,7 @@
                                         <rect key="frame" x="0.0" y="28" width="192" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gZ0-YA-m0h" id="yLD-4l-dck">
-                                            <rect key="frame" x="0.0" y="0.0" width="192" height="199"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="192" height="199.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Udi-B9-D53">
@@ -686,6 +686,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
+                                                    <action selector="textFieldEntered:" destination="aee-oF-sq4" eventType="editingDidBegin" id="j6d-sq-lb2"/>
                                                     <outlet property="delegate" destination="aee-oF-sq4" id="AtF-NK-6gH"/>
                                                 </connections>
                                             </textField>
@@ -696,6 +697,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
+                                                    <action selector="textFieldEntered:" destination="aee-oF-sq4" eventType="editingDidBegin" id="vgu-eh-4y1"/>
                                                     <outlet property="delegate" destination="aee-oF-sq4" id="3f3-OU-51t"/>
                                                 </connections>
                                             </textField>
@@ -759,12 +761,12 @@
                     <connections>
                         <outlet property="adminNotesTextView" destination="Xhl-TP-KtI" id="aih-Y3-SI3"/>
                         <outlet property="daScrollView" destination="Xdm-Fx-6Ux" id="khA-bq-JFW"/>
+                        <outlet property="dateField" destination="6RY-Id-45O" id="nKM-6A-ez6"/>
                         <outlet property="descriptionTextView" destination="rHb-PB-JSX" id="hJd-cJ-aFW"/>
-                        <outlet property="endTimeField" destination="9lx-9N-I5h" id="oqc-Ab-y3F"/>
                         <outlet property="eventImageView" destination="TcN-3B-yjz" id="xU9-Xg-zUN"/>
                         <outlet property="eventNameField" destination="GhZ-jP-5lF" id="zGZ-El-pYM"/>
                         <outlet property="locationField" destination="5QK-wD-9lb" id="Ain-4a-AUv"/>
-                        <outlet property="startTimeField" destination="6RY-Id-45O" id="niP-G3-xDC"/>
+                        <outlet property="timeField" destination="9lx-9N-I5h" id="Nzz-0W-wld"/>
                         <outlet property="urlField" destination="oEa-Qu-NJa" id="bqV-N8-hzN"/>
                     </connections>
                 </viewController>

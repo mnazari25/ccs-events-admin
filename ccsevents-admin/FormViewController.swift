@@ -20,8 +20,8 @@ class FormViewController: UIViewController {
     @IBOutlet weak var urlField: UITextField!
     @IBOutlet weak var eventNameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
-    @IBOutlet weak var startTimeField: UITextField!
-    @IBOutlet weak var endTimeField: UITextField!
+    @IBOutlet weak var dateField: UITextField!
+    @IBOutlet weak var timeField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var adminNotesTextView: UITextView!
     @IBOutlet weak var eventImageView: UIImageView!
@@ -41,9 +41,90 @@ class FormViewController: UIViewController {
         adminNotesTextView.text = "Notas administrativas"
         adminNotesTextView.textColor = .darkGray
         
+        let toolBar = makeToolBarPicker(mySelect: #selector(FormViewController.donePressed))
+        descriptionTextView.inputAccessoryView = toolBar
+        adminNotesTextView.inputAccessoryView = toolBar
+        
         registerNotifications()
     }
     
+    func makeToolBarPicker(mySelect : Selector) -> UIToolbar {
+        
+        let toolBar = UIToolbar()
+        
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor.black
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: mySelect)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
+        return toolBar
+    }
+    
+    @IBAction func textFieldEntered(_ sender: UITextField) {
+        let toolBar = makeToolBarPicker(mySelect: #selector(FormViewController.donePressed))
+        if sender.isEqual(dateField) {
+            let datePickerView  : UIDatePicker = UIDatePicker()
+            datePickerView.datePickerMode = UIDatePickerMode.date
+            datePickerView.locale = Locale.init(identifier: "es_HN")
+            dateField.inputView = datePickerView
+            dateField.inputAccessoryView = toolBar
+            datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControlEvents.valueChanged)
+
+            handleDatePicker(sender: datePickerView)
+        } else if sender.isEqual(timeField) {
+            let timePickerView  : UIDatePicker = UIDatePicker()
+            timePickerView.datePickerMode = UIDatePickerMode.time
+
+            if (timeField.text?.isEmpty)! {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat =  "HH:mm"
+                let date = dateFormatter.date(from: "12:00")
+                
+                timePickerView.setDate(date!, animated: true)
+            } else {
+                let timePeriodFormatter = DateFormatter()
+                timePeriodFormatter.dateStyle = .none
+                timePeriodFormatter.timeStyle = .long
+                timePeriodFormatter.timeZone = NSTimeZone.local
+                let date = timePeriodFormatter.date(from: timeField.text!)
+                timePickerView.setDate(date!, animated: true)
+            }
+            
+            timeField.inputView = timePickerView
+            timeField.inputAccessoryView = toolBar
+            timePickerView.addTarget(self, action: #selector(handleTimePicker(sender:)), for: UIControlEvents.valueChanged)
+            
+            handleTimePicker(sender: timePickerView)
+        }
+    }
+    
+    func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .full
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale.init(identifier: "es_HN")
+        dateField.text = dateFormatter.string(from: sender.date)
+    }
+    
+    func donePressed() {
+        dateField.resignFirstResponder()
+        timeField.resignFirstResponder()
+        descriptionTextView.resignFirstResponder()
+        adminNotesTextView.resignFirstResponder()
+    }
+    
+    func handleTimePicker(sender: UIDatePicker) {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .long
+        timeField.text = timeFormatter.string(from: sender.date)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -57,12 +138,27 @@ class FormViewController: UIViewController {
         eventImageView.sd_setImage(with: URL(string: event.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
         eventNameField.text = event.eventName
         locationField.text = event.eventLocation
-        startTimeField.text = "\(event.eventDate)"
-        endTimeField.text = "\(event.eventDate)"
+        
+        let timeInterval : TimeInterval = TimeInterval(event.eventDate)
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateStyle = .full
+        dayTimePeriodFormatter.timeStyle = .none
+        dayTimePeriodFormatter.locale = Locale.init(identifier: "es_HN")
+        let dateString = dayTimePeriodFormatter.string(from: date)
+        dateField.text = dateString
+ 
+        let timePeriodFormatter = DateFormatter()
+        timePeriodFormatter.dateStyle = .none
+        timePeriodFormatter.timeStyle = .long
+        timePeriodFormatter.timeZone = NSTimeZone.local
+        let timeString = timePeriodFormatter.string(from: date)
+        
+        timeField.text = timeString
         
         descriptionTextView.text = event.eventDescription
         descriptionTextView.textColor = .black
-        adminNotesTextView.text = event.eventDescription
+        adminNotesTextView.text = event.adminNotes
         adminNotesTextView.textColor = .black
         
         toggleTextfields(enabled: false)
@@ -72,8 +168,8 @@ class FormViewController: UIViewController {
         urlField.isEnabled = enabled
         eventNameField.isEnabled = enabled
         locationField.isEnabled = enabled
-        startTimeField.isEnabled = enabled
-        endTimeField.isEnabled = enabled
+        dateField.isEnabled = enabled
+        timeField.isEnabled = enabled
         descriptionTextView.isEditable = enabled
         adminNotesTextView.isEditable = enabled
     }
@@ -84,34 +180,28 @@ class FormViewController: UIViewController {
         // If the selectedEvent is nil, we should add the event and save it to Firebase. Assuming all necessary fields have been filled in.
         if shouldSaveChanges {
             print("YEAHHH")
+        
             if urlField.hasText
                 && eventNameField.hasText
                 && locationField.hasText
-                && startTimeField.hasText // Should change to event date
-                && endTimeField.hasText // Should change to event time
+                && dateField.hasText // Should change to event date
+                && timeField.hasText // Should change to event time
                 && descriptionTextView.hasText {
+                
+                // Convert textfield for date and time into NSDate Unix timestamp value.
+                let dateLong : u_long = textFieldsToNSDate(dateText: dateField, timeText: timeField)
                 
                 // TODO: Save event to Firebase
                 let eventToSave = [Constants.eventNameKey : eventNameField.text!,
                                     Constants.eventLocationKey : locationField.text!,
                                     Constants.eventDescriptionKey : descriptionTextView.text!,
                                     Constants.adminNotesKey : adminNotesTextView.text!,
-                                    Constants.eventDateKey : u_long.init(startTimeField.text!) ?? 0,
-                                    Constants.eventTimeKey : u_long.init(startTimeField.text!) ?? 0 ,
+                                    Constants.eventDateKey : dateLong,
+                                    Constants.eventTimeKey : dateLong,
                                     Constants.eventImageKey : urlField.text!] as [String : Any]
                 
                 if selectedEvent == nil {
                     ref.childByAutoId().setValue(eventToSave)
-                    
-                    let countRef = FIRDatabase.database().reference(withPath: "MyNetwork/event_count")
-                    countRef.observeSingleEvent(of: .value) { (snap : FIRDataSnapshot) in
-                        guard var eventCount = snap.value as? Int else {
-                            return
-                        }
-                        
-//                        countRef.setValue(eventCount += 1)
-                    }
-
                 } else {
                     ref.child((selectedEvent?.key)!).setValue(eventToSave)
                 }
@@ -120,6 +210,40 @@ class FormViewController: UIViewController {
                 // TODO: Notify user that all fields must be filled in.
             }
         }
+    }
+    
+    // Takes in date and time strings and returns Unix timestamp for combined date.
+    func textFieldsToNSDate(dateText : UITextField, timeText : UITextField) -> u_long {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .full
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale.init(identifier: "es_HN")
+        let date = dateFormatter.date(from: dateText.text!)
+        print(date?.description ?? "Uh oh spaghettios")
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .long
+        let time = timeFormatter.date(from: timeText.text!)
+        print(time?.description ?? "No time for you")
+        
+        let calendar = Calendar.current
+        
+        let componentsOne = calendar.dateComponents([Calendar.Component.year, Calendar.Component.month, Calendar.Component.day], from: date!)
+        let componentsTwo = calendar.dateComponents([Calendar.Component.hour, Calendar.Component.minute], from: time!)
+        
+        var totalComponents = DateComponents()
+        totalComponents.year = componentsOne.year
+        totalComponents.month = componentsOne.month
+        totalComponents.day = componentsOne.day
+        totalComponents.hour = componentsTwo.hour
+        totalComponents.minute = componentsTwo.minute
+        
+        let finalDate = calendar.date(from: totalComponents)
+        
+        print(finalDate?.description ?? "Final date fail")
+        print("\(u_long((finalDate?.timeIntervalSince1970)!))")
+        return u_long((finalDate?.timeIntervalSince1970)!)
     }
 }
 
@@ -157,10 +281,10 @@ extension FormViewController : UITextFieldDelegate {
         } else if textField.isEqual(eventNameField) {
             locationField.becomeFirstResponder()
         } else if textField.isEqual(locationField) {
-            startTimeField.becomeFirstResponder()
-        } else if textField.isEqual(startTimeField){
-            endTimeField.becomeFirstResponder()
-        } else if textField.isEqual(endTimeField) {
+            dateField.becomeFirstResponder()
+        } else if textField.isEqual(dateField){
+            timeField.becomeFirstResponder()
+        } else if textField.isEqual(timeField) {
             descriptionTextView.becomeFirstResponder()
         }
         
