@@ -17,7 +17,6 @@ class FormViewController: UIViewController {
     
     @IBOutlet weak var daScrollView: UIScrollView!
     
-    @IBOutlet weak var urlField: UITextField!
     @IBOutlet weak var eventNameField: UITextField!
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var dateField: UITextField!
@@ -28,13 +27,14 @@ class FormViewController: UIViewController {
     
     var viewIsEditing : Bool = false
     var selectedEvent : Event?
+    var didChangeImage : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = FIRDatabase.database().reference().child("ccs/events")
         
-        daScrollView.contentSize.height = 950
+        daScrollView.contentSize.height = 1350
         
         descriptionTextView.text = "Descripción del evento"
         descriptionTextView.textColor = .darkGray
@@ -46,6 +46,68 @@ class FormViewController: UIViewController {
         adminNotesTextView.inputAccessoryView = toolBar
         
         registerNotifications()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let event = selectedEvent else {
+            // Enable textfields if no event was passed so the user can add an event.
+            toggleTextfields(enabled: true)
+            return
+        }
+        
+        if !didChangeImage {
+            getImageFromStorageRef(title: event.eventImage, imageView: eventImageView)
+        }
+        
+        eventNameField.text = event.eventName
+        locationField.text = event.eventLocation
+        
+        let timeInterval : TimeInterval = TimeInterval(event.eventDate)
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateStyle = .full
+        dayTimePeriodFormatter.timeStyle = .none
+        dayTimePeriodFormatter.locale = Locale.init(identifier: "es_HN")
+        let dateString = dayTimePeriodFormatter.string(from: date)
+        dateField.text = dateString
+ 
+        let timePeriodFormatter = DateFormatter()
+        timePeriodFormatter.dateStyle = .none
+        timePeriodFormatter.timeStyle = .long
+        timePeriodFormatter.timeZone = NSTimeZone.local
+        let timeString = timePeriodFormatter.string(from: date)
+        
+        timeField.text = timeString
+        
+        descriptionTextView.text = event.eventDescription
+        descriptionTextView.textColor = .black
+        adminNotesTextView.text = event.adminNotes
+        adminNotesTextView.textColor = .black
+        
+        toggleTextfields(enabled: false)
+    }
+    
+    func resetUI() {
+        didChangeImage = false
+        eventNameField.text = ""
+        locationField.text = ""
+        dateField.text = ""
+        timeField.text = ""
+        descriptionTextView.text = ""
+        adminNotesTextView.text = ""
+        eventImageView.image = #imageLiteral(resourceName: "calendar")
+    }
+    
+    func toggleTextfields(enabled: Bool) {
+        viewIsEditing = enabled
+        eventNameField.isEnabled = enabled
+        locationField.isEnabled = enabled
+        dateField.isEnabled = enabled
+        timeField.isEnabled = enabled
+        descriptionTextView.isEditable = enabled
+        adminNotesTextView.isEditable = enabled
     }
     
     func makeToolBarPicker(mySelect : Selector) -> UIToolbar {
@@ -75,12 +137,12 @@ class FormViewController: UIViewController {
             dateField.inputView = datePickerView
             dateField.inputAccessoryView = toolBar
             datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: UIControlEvents.valueChanged)
-
+            
             handleDatePicker(sender: datePickerView)
         } else if sender.isEqual(timeField) {
             let timePickerView  : UIDatePicker = UIDatePicker()
             timePickerView.datePickerMode = UIDatePickerMode.time
-
+            
             if (timeField.text?.isEmpty)! {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat =  "HH:mm"
@@ -91,7 +153,6 @@ class FormViewController: UIViewController {
                 let timePeriodFormatter = DateFormatter()
                 timePeriodFormatter.dateStyle = .none
                 timePeriodFormatter.timeStyle = .long
-                timePeriodFormatter.timeZone = NSTimeZone.local
                 let date = timePeriodFormatter.date(from: timeField.text!)
                 timePickerView.setDate(date!, animated: true)
             }
@@ -125,64 +186,13 @@ class FormViewController: UIViewController {
         timeFormatter.timeStyle = .long
         timeField.text = timeFormatter.string(from: sender.date)
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        guard let event = selectedEvent else {
-            // Enable textfields if no event was passed so the user can add an event.
-            toggleTextfields(enabled: true)
-            return
-        }
-        
-        urlField.text = event.eventImage
-        eventImageView.sd_setImage(with: URL(string: event.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
-        eventNameField.text = event.eventName
-        locationField.text = event.eventLocation
-        
-        let timeInterval : TimeInterval = TimeInterval(event.eventDate)
-        let date = Date(timeIntervalSince1970: timeInterval)
-        let dayTimePeriodFormatter = DateFormatter()
-        dayTimePeriodFormatter.dateStyle = .full
-        dayTimePeriodFormatter.timeStyle = .none
-        dayTimePeriodFormatter.locale = Locale.init(identifier: "es_HN")
-        let dateString = dayTimePeriodFormatter.string(from: date)
-        dateField.text = dateString
- 
-        let timePeriodFormatter = DateFormatter()
-        timePeriodFormatter.dateStyle = .none
-        timePeriodFormatter.timeStyle = .long
-        timePeriodFormatter.timeZone = NSTimeZone.local
-        let timeString = timePeriodFormatter.string(from: date)
-        
-        timeField.text = timeString
-        
-        descriptionTextView.text = event.eventDescription
-        descriptionTextView.textColor = .black
-        adminNotesTextView.text = event.adminNotes
-        adminNotesTextView.textColor = .black
-        
-        toggleTextfields(enabled: false)
-    }
-    
-    func toggleTextfields(enabled: Bool) {
-        urlField.isEnabled = enabled
-        eventNameField.isEnabled = enabled
-        locationField.isEnabled = enabled
-        dateField.isEnabled = enabled
-        timeField.isEnabled = enabled
-        descriptionTextView.isEditable = enabled
-        adminNotesTextView.isEditable = enabled
-    }
     
     func saveChangesIfNecessary(shouldSaveChanges: Bool) {
         
         // This means the done button was pressed and we should save the changes.
         // If the selectedEvent is nil, we should add the event and save it to Firebase. Assuming all necessary fields have been filled in.
-        if shouldSaveChanges {
-            print("YEAHHH")
-        
-            if urlField.hasText
-                && eventNameField.hasText
+        if shouldSaveChanges {        
+            if eventNameField.hasText
                 && locationField.hasText
                 && dateField.hasText // Should change to event date
                 && timeField.hasText // Should change to event time
@@ -191,16 +201,44 @@ class FormViewController: UIViewController {
                 // Convert textfield for date and time into NSDate Unix timestamp value.
                 let dateLong : u_long = textFieldsToNSDate(dateText: dateField, timeText: timeField)
                 
-                // TODO: Save event to Firebase
+                // TODO: Remove old image from firebase before saving new one.
+                var imageTitle = ""
+                
+                if didChangeImage {
+                    guard let image = eventImageView.image else { return }
+                    
+                    let resizedImage = resizeImage(image: image, newWidth: 400)
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyyMMddhhmmss"
+                    imageTitle = dateFormatter.string(from: Date())
+                    
+                    guard let data = UIImagePNGRepresentation(resizedImage) else {
+                        return
+                    }
+                    saveImageToFirebaseStorage(data: data, title: imageTitle)
+                } else {
+                    if let event = selectedEvent {
+                        imageTitle = event.eventImage
+                    }
+                }
+                
                 let eventToSave = [Constants.eventNameKey : eventNameField.text!,
                                     Constants.eventLocationKey : locationField.text!,
                                     Constants.eventDescriptionKey : descriptionTextView.text!,
                                     Constants.adminNotesKey : adminNotesTextView.text!,
                                     Constants.eventDateKey : dateLong,
                                     Constants.eventTimeKey : dateLong,
-                                    Constants.eventImageKey : urlField.text!] as [String : Any]
+                                    Constants.eventImageKey : imageTitle] as [String : Any]
                 
                 if selectedEvent == nil {
+                    let alert = UIAlertController(title: "Evento Guardado", message: "El evento se ha guardado en la base de datos.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
+                    present(alert, animated: true, completion: {
+                        
+                        self.resetUI()
+                        
+                    })
                     ref.childByAutoId().setValue(eventToSave)
                 } else {
                     ref.child((selectedEvent?.key)!).setValue(eventToSave)
@@ -208,6 +246,9 @@ class FormViewController: UIViewController {
                 
             } else {
                 // TODO: Notify user that all fields must be filled in.
+                let alert = UIAlertController(title: "Forma Incompleta", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -245,6 +286,38 @@ class FormViewController: UIViewController {
         print("\(u_long((finalDate?.timeIntervalSince1970)!))")
         return u_long((finalDate?.timeIntervalSince1970)!)
     }
+    
+    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+        
+        if viewIsEditing {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+extension FormViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            didChangeImage = true
+            
+            eventImageView.contentMode = .scaleAspectFit
+            eventImageView.image = pickedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Notifications
@@ -266,19 +339,7 @@ extension FormViewController {
 extension FormViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        if textField.isEqual(urlField) {
-            eventNameField.becomeFirstResponder()
-            // Attempt to load url into imageview.
-            guard let urlText = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return true }
-        
-            //TODO: Check if urltext is a valid url.
-            if urlText.isEmpty {
-                eventImageView.image = #imageLiteral(resourceName: "calendar")
-            } else {
-                eventImageView.sd_setImage(with: URL(string: urlText), placeholderImage: #imageLiteral(resourceName: "calendar"))
-            }
-
-        } else if textField.isEqual(eventNameField) {
+        if textField.isEqual(eventNameField) {
             locationField.becomeFirstResponder()
         } else if textField.isEqual(locationField) {
             dateField.becomeFirstResponder()

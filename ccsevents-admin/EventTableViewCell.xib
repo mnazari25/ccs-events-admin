@@ -23,15 +23,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="153.5" height="99.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" translatesAutoresizingMaskIntoConstraints="NO" id="vat-13-2e9">
-                                <rect key="frame" x="11.5" y="7.5" width="130.5" height="84.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="153.5" height="99.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="vat-13-2e9" firstAttribute="width" secondItem="KJS-W3-mXj" secondAttribute="width" multiplier="0.85" id="G5d-2O-dDJ"/>
+                            <constraint firstItem="vat-13-2e9" firstAttribute="width" secondItem="KJS-W3-mXj" secondAttribute="width" id="G5d-2O-dDJ"/>
                             <constraint firstItem="vat-13-2e9" firstAttribute="centerX" secondItem="KJS-W3-mXj" secondAttribute="centerX" id="WgK-9W-Mro"/>
                             <constraint firstItem="vat-13-2e9" firstAttribute="centerY" secondItem="KJS-W3-mXj" secondAttribute="centerY" id="nRm-71-Rqt"/>
-                            <constraint firstItem="vat-13-2e9" firstAttribute="height" secondItem="KJS-W3-mXj" secondAttribute="height" multiplier="0.85" id="p7x-qQ-VOj"/>
+                            <constraint firstItem="vat-13-2e9" firstAttribute="height" secondItem="KJS-W3-mXj" secondAttribute="height" id="p7x-qQ-VOj"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8eg-h9-EK1">

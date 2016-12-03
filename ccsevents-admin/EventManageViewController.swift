@@ -33,12 +33,12 @@ class EventManageViewController: UIViewController {
         eventTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         eventTableView.allowsMultipleSelectionDuringEditing = false
-        
-        readAndListenForEvents()
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        readAndListenForEvents()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -66,7 +66,8 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         
         let thisEvent = savedEvents[indexPath.row]
         
-        cell.eventImage.sd_setImage(with: URL(string: thisEvent.eventImage), placeholderImage: #imageLiteral(resourceName: "calendar"))
+        getImageFromStorageRef(title: thisEvent.eventImage, imageView: cell.eventImage)
+
         cell.eventTitle.text = thisEvent.eventName
         cell.eventDesc.text = thisEvent.eventDescription
         

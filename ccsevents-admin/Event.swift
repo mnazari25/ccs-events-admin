@@ -45,7 +45,5 @@ class Event : NSObject {
         eventTime = snapshotValue[Constants.eventTimeKey] as! u_long
         eventImage = snapshotValue[Constants.eventImageKey] as! String
         adminNotes = snapshotValue[Constants.adminNotesKey] as! String
-        
     }
-    
 }
