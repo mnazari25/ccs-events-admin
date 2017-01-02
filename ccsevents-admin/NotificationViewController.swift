@@ -25,17 +25,34 @@ class NotificationViewController: UIViewController {
         //TODO: Get info from fields
         //TODO: form JSON 
         //TODO: post to url?? Maybe... wtf!
-        let manager = AFHTTPSessionManager.init(sessionConfiguration: URLSessionConfiguration.default)
-        manager.requestSerializer = AFJSONRequestSerializer.init()
+        let manager = AFHTTPSessionManager()
+        manager.requestSerializer = AFJSONRequestSerializer()
+        manager.responseSerializer = AFHTTPResponseSerializer()
         manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        manager.requestSerializer.setValue("key=AAAARRh04t4:APA91bEck2xAk5w4OmY618olFG3XyGJpnxoPmYsf3Ni9wY5YceNYe7v_BwDxNwrR-n5NskiuXIrnQ2lcK0NhIx8V9F-6PagwK4TRj3Gs9vAJs3rRcIPiNTh4bvuSojCmMINvhNuw4D8vBar2RW3UOxV7R0-6FezBtw", forHTTPHeaderField: "Authorization")
         
-//        manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//        [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//        
-//        [manager POST:url parameters:parametersDictionary progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"success!");
-//        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"error: %@", error);
-//        }];
+        let requestParameters = [
+            "to" : "/topics/event",
+            "notification" : [
+                "title" : titleTextField.text,
+                "body" : messageTextField.text
+            ]
+        ] as [String : Any]
+        
+        let url = "https://fcm.googleapis.com/fcm/send"
+        
+        manager.post(url, parameters: requestParameters, progress: nil, success:
+            {
+                requestOperation, response in
+            
+                let result = NSString(data: (response as! NSData) as Data, encoding: String.Encoding.utf8.rawValue)!
+            
+                print(result)
+        }) {
+            requestOperation, error in
+
+            print(error.localizedDescription)
+        }
+    
     }
 }
