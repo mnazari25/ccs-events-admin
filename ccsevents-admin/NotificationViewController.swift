@@ -8,9 +8,12 @@
 
 import UIKit
 import AFNetworking
+import Firebase
 
 class NotificationViewController: UIViewController {
 
+    var ref : FIRDatabaseReference!
+    
     //Outlet
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var messageTextField: UITextField!
@@ -18,13 +21,23 @@ class NotificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ref = FIRDatabase.database().reference().child("ccs/notifications")
+        
         notificationButton.layer.cornerRadius = 6.0
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
-        //TODO: Get info from fields
-        //TODO: form JSON 
-        //TODO: post to url?? Maybe... wtf!
+
+        if (titleTextField.text?.isEmpty)! || (messageTextField.text?.isEmpty)! {
+            // TODO: Alert user that textfields are empty.
+            let alert = UIAlertController(title: "Forma Incompleta", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        // Trigger remote notification
         let manager = AFHTTPSessionManager()
         manager.requestSerializer = AFJSONRequestSerializer()
         manager.responseSerializer = AFHTTPResponseSerializer()
@@ -54,5 +67,10 @@ class NotificationViewController: UIViewController {
             print(error.localizedDescription)
         }
     
+        // Store notification to database
+        let notificationObject = [Constants.notificationTitleKey : titleTextField.text,
+                                  Constants.notificationMessageKey : messageTextField.text]
+        
+        ref.childByAutoId().setValue(notificationObject)
     }
 }

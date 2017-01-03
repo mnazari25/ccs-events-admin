@@ -14,9 +14,10 @@ class ViewController: UIViewController {
     var isExpanded = false
     
     let menuCellReuse = "menuCellReuse"
-    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
-    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
-
+//    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
+//    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
+    let menuItems = ["Evento", "Notificación"]
+    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "notification")]
     
     // Outlets
     @IBOutlet weak var menuTableView: UITableView!
@@ -98,29 +99,29 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
+        
+        let selectedMenuItem = menuItems[indexPath.row]
+        
+        if selectedMenuItem == "Evento" {
             eventContainer.isHidden = false
             galleryContainer.isHidden = true
             notificationContainer.isHidden = true
             informationContainer.isHidden = true
-        case 1:
+        } else if selectedMenuItem == "Galería" {
             eventContainer.isHidden = true
             galleryContainer.isHidden = false
             notificationContainer.isHidden = true
             informationContainer.isHidden = true
-        case 2:
+        } else if selectedMenuItem == "Notificación" {
             eventContainer.isHidden = true
             galleryContainer.isHidden = true
             notificationContainer.isHidden = false
             informationContainer.isHidden = true
-        case 3:
+        } else if selectedMenuItem == "Información" {
             eventContainer.isHidden = true
             galleryContainer.isHidden = true
             notificationContainer.isHidden = true
             informationContainer.isHidden = false
-        default:
-            break
         }
     }
 }

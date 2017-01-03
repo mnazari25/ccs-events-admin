@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TUf-x9-87R">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TUf-x9-87R">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -119,7 +119,7 @@
                     <navigationItem key="navigationItem" id="rvN-eK-UaW">
                         <string key="title">Panel de Administración CCS
 </string>
-                        <barButtonItem key="leftBarButtonItem" systemItem="compose" id="v2A-LZ-mdb">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="v2A-LZ-mdb">
                             <color key="tintColor" red="0.058823529409999999" green="0.047058823530000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButtonPressed:" destination="BYZ-38-t0r" id="HOI-FR-52b"/>

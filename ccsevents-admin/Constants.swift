@@ -22,4 +22,8 @@ class Constants {
     static let eventDescriptionKey = "eventDescription"
     static let eventTimeKey = "eventTime"
     static let eventImageKey = "eventImage"
+    
+    // Notification
+    static let notificationTitleKey = "notificationTitle"
+    static let notificationMessageKey = "notificationMessage"
 }
