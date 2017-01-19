@@ -26,4 +26,5 @@ class Constants {
     // Notification
     static let notificationTitleKey = "notificationTitle"
     static let notificationMessageKey = "notificationMessage"
+    static let notificationDateKey = "notificationDate"
 }

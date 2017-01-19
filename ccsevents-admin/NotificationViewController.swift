@@ -67,10 +67,45 @@ class NotificationViewController: UIViewController {
             print(error.localizedDescription)
         }
     
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        
+        let now = Date()
+        let date = formatter.string(from: now)
+        
         // Store notification to database
-        let notificationObject = [Constants.notificationTitleKey : titleTextField.text,
-                                  Constants.notificationMessageKey : messageTextField.text]
+        let notificationObject = [Constants.notificationTitleKey : titleTextField?.text,
+                                  Constants.notificationMessageKey : messageTextField?.text,
+                                  Constants.notificationDateKey : date]
         
         ref.childByAutoId().setValue(notificationObject)
+        readAndListenForEvents()
+    }
+}
+
+// MARK: - CRUD Functionality
+extension NotificationViewController {
+    func readAndListenForEvents() {
+        ref.queryOrderedByKey().observe(.value) { (snap : FIRDataSnapshot) in
+            
+            // Clear old list to make room
+            var savedNotifications : [CustomNotification] = []
+            
+            if snap.hasChildren() {
+                // Loop through all event children
+                for child in snap.children {
+                    // Create new event object using Data snapshot
+                    let newNotification = CustomNotification(snapshot: child as! FIRDataSnapshot)
+                    // Add new event to saved event list
+                    savedNotifications.append(newNotification)
+                }
+                savedNotifications = savedNotifications.reversed()
+            }
+            
+            UserDefaults.standard.set(savedNotifications.count, forKey: "notificationCount")
+            let countRef = FIRDatabase.database().reference().child("MyNetwork/notifications")
+            countRef.setValue(savedNotifications.count)
+        }
     }
 }
