@@ -23,7 +23,6 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         
         ref = FIRDatabase.database().reference().child("ccs/notifications")
-        
         notificationButton.layer.cornerRadius = 6.0
     }
     

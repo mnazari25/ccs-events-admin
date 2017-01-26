@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TUf-x9-87R">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TUf-x9-87R">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -31,7 +31,7 @@
                                         <rect key="frame" x="0.0" y="28" width="192" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gZ0-YA-m0h" id="yLD-4l-dck">
-                                            <rect key="frame" x="0.0" y="0.0" width="192" height="199"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="192" height="199.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Udi-B9-D53">
@@ -263,47 +263,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="576" height="961"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdk-gw-sQL">
-                                <rect key="frame" x="0.0" y="817" width="576" height="144"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7wf-Ck-LuD">
-                                        <rect key="frame" x="29" y="14" width="518.5" height="116"/>
-                                        <color key="backgroundColor" red="0.058823529409999999" green="0.047058823530000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="36"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal">
-                                            <string key="title">Enviar Notificación
-</string>
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="7wf-Ck-LuD" firstAttribute="height" secondItem="cdk-gw-sQL" secondAttribute="height" multiplier="0.8" id="1nD-NU-WSO"/>
-                                    <constraint firstItem="7wf-Ck-LuD" firstAttribute="width" secondItem="cdk-gw-sQL" secondAttribute="width" multiplier="0.9" id="BGF-Zb-l5M"/>
-                                    <constraint firstItem="7wf-Ck-LuD" firstAttribute="centerX" secondItem="cdk-gw-sQL" secondAttribute="centerX" id="lWE-8L-ofA"/>
-                                    <constraint firstItem="7wf-Ck-LuD" firstAttribute="centerY" secondItem="cdk-gw-sQL" secondAttribute="centerY" id="tqV-Wm-pJ0"/>
-                                </constraints>
-                            </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S7h-ss-mRI">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Título" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S7h-ss-mRI">
                                 <rect key="frame" x="29" y="50" width="518" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J3I-Q6-Rhh">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mensaje" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J3I-Q6-Rhh">
                                 <rect key="frame" x="29" y="88" width="518" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-Mj-3FE">
-                                <rect key="frame" x="29" y="126" width="518" height="116"/>
+                                <rect key="frame" x="29" y="150" width="518" height="82"/>
                                 <color key="backgroundColor" red="0.057557911470000001" green="0.048221611249999997" blue="0.33313301280000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Send"/>
+                                <state key="normal">
+                                    <string key="title">Enviar Notificación
+</string>
+                                </state>
                                 <connections>
                                     <action selector="sendButtonPressed:" destination="WbB-QS-5oA" eventType="touchUpInside" id="V9h-cN-BBF"/>
                                 </connections>
@@ -313,23 +293,18 @@
                         <constraints>
                             <constraint firstItem="S7h-ss-mRI" firstAttribute="centerX" secondItem="k68-gj-npV" secondAttribute="centerX" id="4Jb-wa-XzB"/>
                             <constraint firstItem="J3I-Q6-Rhh" firstAttribute="top" secondItem="S7h-ss-mRI" secondAttribute="bottom" constant="8" id="7r1-o0-qln"/>
-                            <constraint firstItem="Kjr-Mj-3FE" firstAttribute="top" secondItem="J3I-Q6-Rhh" secondAttribute="bottom" constant="8" id="9CZ-QC-xS4"/>
+                            <constraint firstItem="Kjr-Mj-3FE" firstAttribute="top" secondItem="J3I-Q6-Rhh" secondAttribute="bottom" constant="32" id="9CZ-QC-xS4"/>
                             <constraint firstItem="J3I-Q6-Rhh" firstAttribute="centerX" secondItem="S7h-ss-mRI" secondAttribute="centerX" id="9vz-l5-ukQ"/>
-                            <constraint firstItem="cdk-gw-sQL" firstAttribute="width" secondItem="k68-gj-npV" secondAttribute="width" id="DGu-5Y-F7B"/>
-                            <constraint firstItem="cdk-gw-sQL" firstAttribute="height" secondItem="k68-gj-npV" secondAttribute="height" multiplier="0.15" id="LEb-fG-OOs"/>
                             <constraint firstItem="Kjr-Mj-3FE" firstAttribute="centerX" secondItem="J3I-Q6-Rhh" secondAttribute="centerX" id="Qcl-tB-hje"/>
                             <constraint firstItem="Kjr-Mj-3FE" firstAttribute="width" secondItem="J3I-Q6-Rhh" secondAttribute="width" id="Tft-gR-bye"/>
                             <constraint firstItem="S7h-ss-mRI" firstAttribute="top" secondItem="UKh-eX-6nm" secondAttribute="bottom" constant="50" id="Uvb-fr-snI"/>
-                            <constraint firstItem="HUa-0y-YhV" firstAttribute="top" secondItem="cdk-gw-sQL" secondAttribute="bottom" id="Z8N-zu-jbQ"/>
-                            <constraint firstItem="Kjr-Mj-3FE" firstAttribute="height" secondItem="7wf-Ck-LuD" secondAttribute="height" id="pxT-We-Rph"/>
                             <constraint firstItem="S7h-ss-mRI" firstAttribute="width" secondItem="k68-gj-npV" secondAttribute="width" multiplier="0.9" id="sfb-7j-e7e"/>
                             <constraint firstItem="J3I-Q6-Rhh" firstAttribute="width" secondItem="S7h-ss-mRI" secondAttribute="width" id="vxG-qM-uMJ"/>
-                            <constraint firstItem="cdk-gw-sQL" firstAttribute="centerX" secondItem="k68-gj-npV" secondAttribute="centerX" id="xMT-bl-rqL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="messageTextField" destination="J3I-Q6-Rhh" id="YlH-4T-43y"/>
-                        <outlet property="notificationButton" destination="7wf-Ck-LuD" id="rjx-7C-rqh"/>
+                        <outlet property="notificationButton" destination="Kjr-Mj-3FE" id="HBo-pS-sv3"/>
                         <outlet property="titleTextField" destination="S7h-ss-mRI" id="i52-QN-pON"/>
                     </connections>
                 </viewController>
