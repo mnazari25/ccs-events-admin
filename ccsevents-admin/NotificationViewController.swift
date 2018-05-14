@@ -30,7 +30,7 @@ class NotificationViewController: UIViewController {
 
         if (titleTextField.text?.isEmpty)! || (messageTextField.text?.isEmpty)! {
             // TODO: Alert user that textfields are empty.
-            let alert = UIAlertController(title: "Forma Incompleta", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Formulario incompleto", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
             return
@@ -80,6 +80,19 @@ class NotificationViewController: UIViewController {
         
         ref.childByAutoId().setValue(notificationObject)
         readAndListenForEvents()
+        
+        let alert = UIAlertController(title: "Notificación enviada", message: "La notificación se ha enviado correctamente.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
+        present(alert, animated: true, completion: {
+            
+            self.resetUI()
+            
+        })
+    }
+    
+    func resetUI() {
+        titleTextField.text = ""
+        messageTextField.text = ""
     }
 }
 

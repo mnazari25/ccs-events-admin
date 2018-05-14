@@ -12,6 +12,7 @@
 		AF08931B1DB9F380005A5CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08931A1DB9F380005A5CBF /* Constants.swift */; };
 		AF08931D1DBA0737005A5CBF /* Helpers-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08931C1DBA0737005A5CBF /* Helpers-Extensions.swift */; };
 		AF4B949E1E1F6106004D845E /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4B949D1E1F6106004D845E /* Notification.swift */; };
+		AF7B4FFA20A903BC00353991 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7B4FF920A903BC00353991 /* InformationViewController.swift */; };
 		AF975B541DA9EDB0007B4A88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF975B531DA9EDB0007B4A88 /* AppDelegate.swift */; };
 		AF975B561DA9EDB0007B4A88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF975B551DA9EDB0007B4A88 /* ViewController.swift */; };
 		AF975B591DA9EDB0007B4A88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF975B571DA9EDB0007B4A88 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 		AF08931A1DB9F380005A5CBF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AF08931C1DBA0737005A5CBF /* Helpers-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Helpers-Extensions.swift"; sourceTree = "<group>"; };
 		AF4B949D1E1F6106004D845E /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		AF7B4FF920A903BC00353991 /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		AF975B501DA9EDB0007B4A88 /* ccsevents-admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ccsevents-admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF975B531DA9EDB0007B4A88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF975B551DA9EDB0007B4A88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AF7B4FF820A9039A00353991 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				AF7B4FF920A903BC00353991 /* InformationViewController.swift */,
+			);
+			name = Information;
+			sourceTree = "<group>";
+		};
 		AF975B471DA9EDB0007B4A88 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +128,7 @@
 				AFE8B1D91DAA00360056D44E /* Event Management */,
 				AFE8B1E91DAA2C320056D44E /* Notification */,
 				AFE8B1EC1DAA2E2F0056D44E /* Gallery */,
+				AF7B4FF820A9039A00353991 /* Information */,
 				AF975B571DA9EDB0007B4A88 /* Main.storyboard */,
 				AF975B5F1DA9EDB0007B4A88 /* LaunchScreen.storyboard */,
 				AF975B5D1DA9EDB0007B4A88 /* Assets.xcassets */,
@@ -203,7 +214,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Amir Nazari";
 				TargetAttributes = {
 					AF975B4F1DA9EDB0007B4A88 = {
@@ -314,6 +325,7 @@
 				AF08931B1DB9F380005A5CBF /* Constants.swift in Sources */,
 				AFE8B1D71DA9FDDC0056D44E /* EventManageViewController.swift in Sources */,
 				AF0893191DB9CA26005A5CBF /* FormViewController.swift in Sources */,
+				AF7B4FFA20A903BC00353991 /* InformationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,6 +45,18 @@ extension GalleryViewController : UICollectionViewDelegate, UICollectionViewData
             return
         }
         
+        cell.deleteButton.tag = indexPath.row
+//        cell.deleteButton.addTarget(self, action: #selector(GalleryViewController.deleteImage(_:)), for: .touchUpInside)
+        
         cell.toggleDeleteButton()
+    }
+    
+    @objc func deleteImage(_ sender : UIButton) {
+        let tag = sender.tag
+        
+//        guard let hintMessage = (cluesListForRoom[tag])["hint"] else {
+//            return
+//        }
+//        gameMasterVC.showClueText(message: hintMessage)
     }
 }

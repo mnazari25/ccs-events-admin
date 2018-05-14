@@ -24,6 +24,7 @@ class FormViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var adminNotesTextView: UITextView!
     @IBOutlet weak var eventImageView: UIImageView!
+    @IBOutlet weak var clearImageButton: UIButton!
     
     var viewIsEditing : Bool = false
     var selectedEvent : Event?
@@ -31,6 +32,12 @@ class FormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if !viewIsEditing {
+            clearImageButton.isHidden = true
+        }
+        
+        clearImageButton.layer.cornerRadius = 6.0
         
         ref = FIRDatabase.database().reference().child("ccs/events")
         
@@ -108,6 +115,7 @@ class FormViewController: UIViewController {
         timeField.isEnabled = enabled
         descriptionTextView.isEditable = enabled
         adminNotesTextView.isEditable = enabled
+        clearImageButton.isHidden = !enabled
     }
     
     func makeToolBarPicker(mySelect : Selector) -> UIToolbar {
@@ -127,6 +135,12 @@ class FormViewController: UIViewController {
         
         return toolBar
     }
+    
+    @IBAction func clearImage(_ sender: UIButton) {
+        eventImageView.image = #imageLiteral(resourceName: "calendar")
+        didChangeImage = false
+    }
+    
     
     @IBAction func textFieldEntered(_ sender: UITextField) {
         let toolBar = makeToolBarPicker(mySelect: #selector(FormViewController.donePressed))
@@ -246,7 +260,7 @@ class FormViewController: UIViewController {
                 
             } else {
                 // TODO: Notify user that all fields must be filled in.
-                let alert = UIAlertController(title: "Forma Incompleta", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Formulario incompleto", message: "Por favor llene los campos requeridos", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "De Acuerdo", style: .default, handler: nil))
                 present(alert, animated: true, completion: nil)
             }
