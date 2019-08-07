@@ -1,5 +1,4 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
 
 target 'ccsevents-admin' do
     
@@ -14,5 +13,6 @@ pod 'Firebase/Storage'
 
 pod 'ImagePicker'
 pod 'SDWebImage', '~>3.8'
+pod 'MapleBacon'
 
 end

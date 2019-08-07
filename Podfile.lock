@@ -65,6 +65,7 @@ PODS:
   - GoogleUtilities (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
   - ImagePicker (2.0.0)
+  - MapleBacon (4.0.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - ImagePicker
+  - MapleBacon
   - SDWebImage (~> 3.8)
 
 SPEC CHECKSUMS:
@@ -95,8 +97,9 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   ImagePicker: 81175d36c2852cb543cb4f5d6c19e28f3e8d90eb
+  MapleBacon: 51238c77f0c0a2fa796bd8698d321fbd3d05c3d7
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: a252ea995631db2c1a1acfb9ed129cf6d105f99f
+PODFILE CHECKSUM: e8c946891a99dfeb03bb3597cd36f6cfdeb276b3
 
-COCOAPODS: 1.1.0.beta.2
+COCOAPODS: 1.4.0

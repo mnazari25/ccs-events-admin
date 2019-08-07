@@ -9,6 +9,23 @@
 import Foundation
 import UIKit
 import FirebaseStorage
+import FirebaseDatabase
+import MapleBacon
+
+func deleteImageFromFirebaseStorage(title: String) {
+    let storage = FIRStorage.storage()
+    // Create a root reference
+    let storageRef = storage.reference()
+    // Create a reference to the file you want to upload
+    let imageRef = storageRef.child("images/\(title)")
+    imageRef.delete { (error) in
+        if error != nil {
+            print("Error deleting image: \(String(describing: error?.localizedDescription))")
+        } else {
+            print("Deleted image successfully")
+        }
+    }
+}
 
 func saveImageToFirebaseStorage(data : Data, title : String) {
     let storage = FIRStorage.storage()
@@ -22,13 +39,14 @@ func saveImageToFirebaseStorage(data : Data, title : String) {
     
     // Upload the file to the path
     let uploadTask = imageRef.put(data, metadata: metadata) { metadata, error in
-        if (error != nil) {
+        if error != nil {
             // Uh-oh, an error occurred!
             print("error")
         } else {
             // Metadata contains file metadata such as size, content-type, and download URL.
-            let downloadURL = metadata!.downloadURL
-            print("\(downloadURL)")
+//            if let downloadURL = metadata!.downloadURL()?.absoluteString {
+//                dbRef.setValue(downloadURL, forKey: "downloadURL")
+//            }
         }
     }
     
@@ -43,7 +61,7 @@ func saveImageToFirebaseStorage(data : Data, title : String) {
     }
 }
 
-func getImageFromStorageRef(title: String, imageView: UIImageView) {
+func getImageFromStorageRef(title: String, imageView: UIImageView, event: Event?) {
     
     imageView.image = #imageLiteral(resourceName: "calendar")
     
@@ -54,14 +72,24 @@ func getImageFromStorageRef(title: String, imageView: UIImageView) {
     let storage = FIRStorage.storage()
     let imageRef = storage.reference(withPath: "images/\(title)")
     
-    imageRef.data(withMaxSize: 1 * 1000 * 1000) { (data, error) -> Void in
-        if (error != nil) {
-            // Uh-oh, an error occurred!
+    imageRef.downloadURL { url, error in
+        if let error = error {
+            // Handle any errors
             print("error downloading image")
+            print(error.localizedDescription)
             imageView.image = #imageLiteral(resourceName: "calendar")
+            return
         } else {
-            let theImage: UIImage! = UIImage(data: data!)
-            imageView.image = theImage
+            if let download = url {
+                
+                if let thisEvent = event {
+                    thisEvent.downloadURL = download.absoluteString
+                }
+                
+                DispatchQueue.main.async {
+                    imageView.setImage(withUrl: download)
+                }
+            }
         }
     }
 }
@@ -76,5 +104,11 @@ func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
     UIGraphicsEndImageContext()
     
     return newImage!
+}
+
+extension Array where Element: Comparable {
+    func containsSameElements(as other: [Element]) -> Bool {
+        return self.count == other.count && self.sorted() == other.sorted()
+    }
 }
 

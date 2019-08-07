@@ -16,6 +16,22 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var galleryImage: UIImageView!
     @IBOutlet weak var deleteBottomConstraint: NSLayoutConstraint!
     
+    public func showDeleteButton() {
+        deleteBottomConstraint.constant = 0
+        UIView.animate(withDuration: 0.5) {
+            self.contentView.layoutIfNeeded()
+        }
+    }
+    
+    public func hideDeleteButton() {
+        if deleteBottomConstraint.constant >= 0 {
+            deleteBottomConstraint.constant = -deleteButton.frame.height
+            UIView.animate(withDuration: 0.5) {
+                self.contentView.layoutIfNeeded()
+            }
+        }
+    }
+    
     public func toggleDeleteButton() {
         if deleteBottomConstraint.constant >= 0 {
             deleteBottomConstraint.constant = -deleteButton.frame.height

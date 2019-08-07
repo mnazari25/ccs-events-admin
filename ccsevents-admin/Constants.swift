@@ -8,6 +8,9 @@
 
 import Foundation
 
+let ReleaseEventsEndpoint = "ccs/events"
+let TestEventsEndpoint = "ccs/events/test"
+
 extension NotificationCenter {
     static var SECONDARY_ACTION_NOTIFICATION : NSNotification.Name {
         return NSNotification.Name(rawValue: "SECONDARY_ACTION_NOTIFICATION")

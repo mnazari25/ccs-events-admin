@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
-import SDWebImage
 
 class EventManageViewController: UIViewController {
 
@@ -26,7 +25,7 @@ class EventManageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = FIRDatabase.database().reference(withPath: "ccs/events")
+        ref = FIRDatabase.database().reference(withPath: ReleaseEventsEndpoint)
         addEventButton.layer.cornerRadius = 6.0
         
         eventTableView.register(UINib.init(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: eventCellReuseID)
@@ -66,8 +65,17 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         
         let thisEvent = savedEvents[indexPath.row]
         
-        getImageFromStorageRef(title: thisEvent.eventImage, imageView: cell.eventImage)
-
+        if thisEvent.downloadURL == "" {
+            getImageFromStorageRef(title: thisEvent.eventImage, imageView: cell.eventImage, event: thisEvent)
+        } else {
+            
+            if let downloadURL = URL(string: thisEvent.downloadURL) {
+                cell.eventImage.setImage(withUrl: downloadURL)
+            } else {
+                getImageFromStorageRef(title: thisEvent.eventImage, imageView: cell.eventImage, event: thisEvent)
+            }
+        }
+        
         cell.eventTitle.text = thisEvent.eventName
         cell.eventDesc.text = thisEvent.eventDescription
         
@@ -106,6 +114,7 @@ extension EventManageViewController : UITableViewDelegate, UITableViewDataSource
         
         if editingStyle == .delete {
             let theEventToDestroy = savedEvents[indexPath.row]
+            deleteImageFromFirebaseStorage(title: theEventToDestroy.eventImage)
             ref.child(theEventToDestroy.key).removeValue()
         }
     }

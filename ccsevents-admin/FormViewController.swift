@@ -39,7 +39,7 @@ class FormViewController: UIViewController {
         
         clearImageButton.layer.cornerRadius = 6.0
         
-        ref = FIRDatabase.database().reference().child("ccs/events")
+        ref = FIRDatabase.database().reference().child(ReleaseEventsEndpoint)
         
         daScrollView.contentSize.height = 1350
         
@@ -65,7 +65,16 @@ class FormViewController: UIViewController {
         }
         
         if !didChangeImage {
-            getImageFromStorageRef(title: event.eventImage, imageView: eventImageView)
+            if event.downloadURL == "" {
+                getImageFromStorageRef(title: event.eventImage, imageView: eventImageView, event: event)
+            } else {
+                if let downloadURL = URL(string: event.downloadURL) {
+                    eventImageView.setImage(withUrl: downloadURL)
+                } else {
+                    getImageFromStorageRef(title: event.eventImage, imageView: eventImageView, event: event)
+                }
+                
+            }
         }
         
         eventNameField.text = event.eventName
@@ -215,8 +224,8 @@ class FormViewController: UIViewController {
                 // Convert textfield for date and time into NSDate Unix timestamp value.
                 let dateLong : u_long = textFieldsToNSDate(dateText: dateField, timeText: timeField)
                 
-                // TODO: Remove old image from firebase before saving new one.
                 var imageTitle = ""
+                let newEventRef = ref.childByAutoId()
                 
                 if didChangeImage {
                     guard let image = eventImageView.image else { return }
@@ -234,6 +243,8 @@ class FormViewController: UIViewController {
                 } else {
                     if let event = selectedEvent {
                         imageTitle = event.eventImage
+                        //TODO: Remove old image from firebase before saving new one.
+//                        deleteImageFromFirebaseStorage(title: imageTitle)
                     }
                 }
                 
@@ -253,7 +264,7 @@ class FormViewController: UIViewController {
                         self.resetUI()
                         
                     })
-                    ref.childByAutoId().setValue(eventToSave)
+                    newEventRef.setValue(eventToSave)
                 } else {
                     ref.child((selectedEvent?.key)!).setValue(eventToSave)
                 }

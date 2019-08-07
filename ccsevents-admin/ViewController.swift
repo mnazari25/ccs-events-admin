@@ -14,8 +14,12 @@ class ViewController: UIViewController {
     var isExpanded = false
     
     let menuCellReuse = "menuCellReuse"
-    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
-    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
+//    let menuItems = ["Evento", "Galería", "Notificación", "Información"]
+//    let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification"), #imageLiteral(resourceName: "info")]
+
+        let menuItems = ["Evento", "Galería", "Notificación"]
+        let menuImages = [#imageLiteral(resourceName: "calendar"), #imageLiteral(resourceName: "gallery"), #imageLiteral(resourceName: "notification")]
+
     
     // Outlets
     @IBOutlet weak var menuTableView: UITableView!
@@ -124,6 +128,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         
         isExpanded = false
         animateMenuBar(open: isExpanded)
+        
+        view.endEditing(true)
     }
 }
 
